@@ -288,10 +288,6 @@ function setLevelTileMap (level: number) {
         tiles.setTilemap(tilemap`level_3`)
     } else if (level == 5) {
         tiles.setTilemap(tilemap`level_4`)
-    } else if (level == 6) {
-        tiles.setTilemap(tilemap`level_5`)
-    } else if (level == 7) {
-        tiles.setTilemap(tilemap`level_6`)
     }
     initializeLevel(level)
 }
@@ -701,6 +697,16 @@ function clearGame () {
         value4.destroy()
     }
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`tile8`, function (sprite, location) {
+    info.changeLifeBy(1)
+    currentLevel += 1
+    if (hasNextLevel()) {
+        game.splash("Next level unlocked!")
+        setLevelTileMap(currentLevel)
+    } else {
+        game.over(true, effects.confetti)
+    }
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`tile1`, function (sprite, location) {
     info.changeLifeBy(1)
     currentLevel += 1
